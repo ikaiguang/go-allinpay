@@ -7,7 +7,7 @@
   "AlliPayWebPassword": "`12qwe",
   "AlliPayMerchantCode": "200604000000445",
   "AlliPayUsername": "20060400000044502",
-  "AlliPayPassword": "111111",
+  "AlliPayPassword": "`12qwe",
   "AlliPayTestAccount": "201303000000000130440",
   "AlliPayCertFile": "config/allinpay-pds.pem",
   "AlliPayPrivateKey": "config/20060400000044502.pem"

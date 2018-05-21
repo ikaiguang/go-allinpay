@@ -27,3 +27,6 @@
 
 # sh
 /push.sh
+
+# mac .DS_Store
+.DS_Store
