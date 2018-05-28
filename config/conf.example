@@ -1,7 +1,7 @@
 AlliPayTestWeb=https://113.108.182.3/aiap
-AlliPayTestAddress=https://113.108.182.3/aipg/ProcessServlet
+AlliPayTestAddress=https://113.108.182.3/aipg/quickpay
 AlliPayProductWeb=https://tlt.allinpay.com/aiap
-AlliPayProductAddress=https://tlt.allinpay.com/aipg/ProcessServlet
+AlliPayProductAddress=https://tlt.allinpay.com/aipg/quickpay
 AlliPayWebUsername=20060400000044502
 AlliPayWebPassword=`12qwe
 AlliPayMerchantCode=200604000000445

@@ -8,9 +8,9 @@ import (
 
 func main() {
 	// 协议签约
-	TestAgreementSigningSms()
+	//TestAgreementSigningSms()
 	// 协议支付
-	//TestAgreementSigningPay()
+	TestAgreementSigningPay()
 }
 
 func TestAgreementSigningPay() {
@@ -67,10 +67,10 @@ func TestAgreementSigningPay() {
 func TestAgreementSigningSms() {
 	// 请求头
 	headerReq := &library.AlliPayReqHeaderReq{
-		TRX_CODE:   "310001",                              // 交易代码
-		LEVEL:      "6",                                   // 处理级别（0-9  0优先级最低，默认为5）
-		REQ_SN:     "200604000000445-rrrr1356732135xxxx1", // 交易流水号（必须全局唯一）
-		SIGNED_MSG: "",                                    // 签名信息
+		TRX_CODE:   "310001",                           // 交易代码
+		LEVEL:      "6",                                // 处理级别（0-9  0优先级最低，默认为5）
+		REQ_SN:     "200604000000445-2018-05-21TestSn", // 交易流水号（必须全局唯一）
+		SIGNED_MSG: "",                                 // 签名信息
 	}
 	// 请求参数
 	smsReq := &library.AgreementSigningSmsReq{
@@ -97,14 +97,14 @@ func TestAgreementSigningSms() {
 		fmt.Println("library.ToAlliPayRequestXmlByte error : ", err)
 		return
 	}
-	fmt.Println(string(reqXmlByte))
+	//fmt.Println(string(reqXmlByte))
 	// post
 	bodyByte, err := library.PostAlliPayXmlByte(library.AlliPayCfg.TestAddress, reqXmlByte)
 	if err != nil {
 		fmt.Println("library.PostAlliPayXmlByte error : ", err)
 		return
 	}
-	fmt.Println(string(bodyByte))
+	//fmt.Println(string(bodyByte))
 	// verify and assignment result
 	smsRes := &library.SigningAgreementSmsRes{}
 	if err = library.VerifyAndSetAlliPayResponse(bodyByte, smsRes); err != nil {
