@@ -11,7 +11,7 @@ import (
 )
 
 // 配置
-type AlliPayConfig struct {
+type AllinPayConfig struct {
 	TestWeb        string // 账户系统web前端(测试)
 	TestAddress    string // 账户对接测试地址
 	ProductWeb     string // 账户系统web前端(生产)
@@ -27,49 +27,58 @@ type AlliPayConfig struct {
 }
 
 var (
-	AlliPayCfg        *AlliPayConfig  // config
-	AlliPayPrivateKey *rsa.PrivateKey // private key
-	AlliPayPublicKey  *rsa.PublicKey  // public key
+	AllinPayAddress    string          // request url
+	AllinPayCfg        *AllinPayConfig  // config
+	AllinPayPrivateKey *rsa.PrivateKey // private key
+	AllinPayPublicKey  *rsa.PublicKey  // public key
 )
 
 func init() {
 	var err error
 	// init config
-	AlliPayCfg = InitAlliPayConfig()
+	AllinPayCfg = InitAllinPayConfig()
 	// init private key
-	AlliPayPrivateKey, err = InitAlliPayPrivateKey()
+	AllinPayPrivateKey, err = InitAllinPayPrivateKey()
 	if err != nil {
-		fmt.Println("InitAlliPayPrivateKey error : ", err)
+		fmt.Println("InitAllinPayPrivateKey error : ", err)
 	}
 	// init public key
-	AlliPayPublicKey, err = InitAlliPayPublicKey()
+	AllinPayPublicKey, err = InitAllinPayPublicKey()
 	if err != nil {
-		fmt.Println("InitAlliPayPublicKey error : ", err)
+		fmt.Println("InitAllinPayPublicKey error : ", err)
 	}
 }
 
 // 初始化配置
-func InitAlliPayConfig() *AlliPayConfig {
-	return &AlliPayConfig{
-		TestWeb:        os.Getenv("AlliPayTestWeb"),        // 账户系统web前端(测试)
-		TestAddress:    os.Getenv("AlliPayTestAddress"),    // 账户对接测试地址
-		ProductWeb:     os.Getenv("AlliPayProductWeb"),     // 账户系统web前端(生产)
-		ProductAddress: os.Getenv("AlliPayProductAddress"), // 账户对接生产地址
-		WebUsername:    os.Getenv("AlliPayWebUsername"),    // web端用户名
-		WebPassword:    os.Getenv("AlliPayWebPassword"),    // web端密码
-		MerchantCode:   os.Getenv("AlliPayMerchantCode"),   // 商户号
-		Username:       os.Getenv("AlliPayUsername"),       // 用户
-		Password:       os.Getenv("AlliPayPassword"),       // 密码
-		TestAccount:    os.Getenv("AlliPayTestAccount"),    // 虚拟账号(用于查询虚拟户余额)
-		CertFile:       os.Getenv("AlliPayCertFile"),       // 通联公钥
-		PrivateKey:     os.Getenv("AlliPayPrivateKey"),     // 商户私钥
+func InitAllinPayConfig() *AllinPayConfig {
+	// config
+	cfg := &AllinPayConfig{
+		TestWeb:        os.Getenv("AllinPayTestWeb"),        // 账户系统web前端(测试)
+		TestAddress:    os.Getenv("AllinPayTestAddress"),    // 账户对接测试地址
+		ProductWeb:     os.Getenv("AllinPayProductWeb"),     // 账户系统web前端(生产)
+		ProductAddress: os.Getenv("AllinPayProductAddress"), // 账户对接生产地址
+		WebUsername:    os.Getenv("AllinPayWebUsername"),    // web端用户名
+		WebPassword:    os.Getenv("AllinPayWebPassword"),    // web端密码
+		MerchantCode:   os.Getenv("AllinPayMerchantCode"),   // 商户号
+		Username:       os.Getenv("AllinPayUsername"),       // 用户
+		Password:       os.Getenv("AllinPayPassword"),       // 密码
+		TestAccount:    os.Getenv("AllinPayTestAccount"),    // 虚拟账号(用于查询虚拟户余额)
+		CertFile:       os.Getenv("AllinPayCertFile"),       // 通联公钥
+		PrivateKey:     os.Getenv("AllinPayPrivateKey"),     // 商户私钥
 	}
+	// request url
+	if os.Getenv("AllinPayEnv") == "dev" {
+		AllinPayAddress = cfg.TestAddress
+	} else {
+		AllinPayAddress = cfg.ProductAddress
+	}
+	return cfg
 }
 
 // 初始化证书 私钥
-func InitAlliPayPrivateKey() (privateKey *rsa.PrivateKey, err error) {
+func InitAllinPayPrivateKey() (privateKey *rsa.PrivateKey, err error) {
 	// pem
-	privatePemByte, err := ioutil.ReadFile(AlliPayCfg.PrivateKey)
+	privatePemByte, err := ioutil.ReadFile(AllinPayCfg.PrivateKey)
 	if err != nil {
 		err = errors.New("ioutil.ReadFile error : " + err.Error())
 		return privateKey, err
@@ -96,9 +105,9 @@ func InitAlliPayPrivateKey() (privateKey *rsa.PrivateKey, err error) {
 }
 
 // 初始化证书 公钥
-func InitAlliPayPublicKey() (publicKey *rsa.PublicKey, err error) {
+func InitAllinPayPublicKey() (publicKey *rsa.PublicKey, err error) {
 	// pem
-	publicPemByte, err := ioutil.ReadFile(AlliPayCfg.CertFile)
+	publicPemByte, err := ioutil.ReadFile(AllinPayCfg.CertFile)
 	if err != nil {
 		err = errors.New("ioutil.ReadFile error : " + err.Error())
 		return publicKey, err
@@ -126,7 +135,7 @@ func InitAlliPayPublicKey() (publicKey *rsa.PublicKey, err error) {
 }
 
 // 通联请求头
-type AlliPayReqHeaderReq struct {
+type AllinPayReqHeaderReq struct {
 	TRX_CODE   string // 交易代码
 	LEVEL      string // 处理级别（0-9  0优先级最低，默认为5）
 	REQ_SN     string // 交易流水号（必须全局唯一）
@@ -134,15 +143,15 @@ type AlliPayReqHeaderReq struct {
 }
 
 // 通联请求头
-func InitAlliPayReqHeader(req *AlliPayReqHeaderReq) *AlliPayReqINFO {
-	return &AlliPayReqINFO{
+func InitAllinPayReqHeader(req *AllinPayReqHeaderReq) *AllinPayReqINFO {
+	return &AllinPayReqINFO{
 		TRX_CODE:    req.TRX_CODE,            // 交易代码
 		VERSION:     "04",                    // 版本（04）
 		DATA_TYPE:   "2",                     // 数据格式（2：xml格式）
 		LEVEL:       req.LEVEL,               // 处理级别（0-9  0优先级最低，默认为5）
-		MERCHANT_ID: AlliPayCfg.MerchantCode, // 商户代码
-		USER_NAME:   AlliPayCfg.Username,     // 用户名
-		USER_PASS:   AlliPayCfg.Password,     // 用户密码
+		MERCHANT_ID: AllinPayCfg.MerchantCode, // 商户代码
+		USER_NAME:   AllinPayCfg.Username,     // 用户名
+		USER_PASS:   AllinPayCfg.Password,     // 用户密码
 		REQ_SN:      req.REQ_SN,              // 交易流水号（必须全局唯一）
 		SIGNED_MSG:  req.SIGNED_MSG,          // 签名信息
 	}

@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 )
 
-func PostAlliPayXmlByte(url string, xml []byte) (r []byte, err error) {
+func PostAllinPayXmlByte(url string, xml []byte) (r []byte, err error) {
 	// tls
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},

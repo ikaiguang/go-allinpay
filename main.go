@@ -15,7 +15,7 @@ func main() {
 
 func TestAgreementSigningPay() {
 	// 请求头
-	headerReq := &library.AlliPayReqHeaderReq{
+	headerReq := &library.AllinPayReqHeaderReq{
 		TRX_CODE:   "310011",                            // 交易代码
 		LEVEL:      "6",                                 // 处理级别（0-9  0优先级最低，默认为5）
 		REQ_SN:     "200604000000445-20180518-99999999", // 交易流水号（必须全局唯一）
@@ -23,10 +23,10 @@ func TestAgreementSigningPay() {
 	}
 	// 请求参数
 	payReq := &library.AgreementSigningPayReq{
-		INFO: *library.InitAlliPayReqHeader(headerReq),
+		INFO: *library.InitAllinPayReqHeader(headerReq),
 		FASTTRX: library.AgreementSigningPayReqFASTTRX{
 			BUSINESS_CODE: "01",                            // 业务代码
-			MERCHANT_ID:   library.AlliPayCfg.MerchantCode, // 商户代码
+			MERCHANT_ID:   library.AllinPayCfg.MerchantCode, // 商户代码
 			SUBMIT_TIME:   "20180518121212",                // 提交时间（YYYYMMDDHHMMSS）
 			AGRMNO:        "abc",                           // 协议号（签约时返回的协议号）
 			ACCOUNT_NO:    "6217000010064449999",           // 账号（借记卡或信用卡）
@@ -42,22 +42,22 @@ func TestAgreementSigningPay() {
 		},
 	}
 	// xml
-	reqXmlByte, err := library.ToAlliPayRequestXmlByte(payReq)
+	reqXmlByte, err := library.ToAllinPayRequestXmlByte(payReq)
 	if err != nil {
-		fmt.Println("library.ToAlliPayRequestXmlByte error : ", err)
+		fmt.Println("library.ToAllinPayRequestXmlByte error : ", err)
 		return
 	}
 	//fmt.Println(string(reqXmlByte))
 	// post
-	bodyByte, err := library.PostAlliPayXmlByte(library.AlliPayCfg.TestAddress, reqXmlByte)
+	bodyByte, err := library.PostAllinPayXmlByte(library.AllinPayCfg.TestAddress, reqXmlByte)
 	if err != nil {
-		fmt.Println("library.PostAlliPayXmlByte error : ", err)
+		fmt.Println("library.PostAllinPayXmlByte error : ", err)
 		return
 	}
 	//fmt.Println(string(bodyByte))
 	// verify and assignment result
 	payRes := &library.SigningAgreementPayRes{}
-	if err = library.VerifyAndSetAlliPayResponse(bodyByte, payRes); err != nil {
+	if err = library.VerifyAndSetAllinPayResponse(bodyByte, payRes); err != nil {
 		fmt.Println(err)
 		return
 	}
@@ -66,7 +66,7 @@ func TestAgreementSigningPay() {
 
 func TestAgreementSigningSms() {
 	// 请求头
-	headerReq := &library.AlliPayReqHeaderReq{
+	headerReq := &library.AllinPayReqHeaderReq{
 		TRX_CODE:   "310001",                           // 交易代码
 		LEVEL:      "6",                                // 处理级别（0-9  0优先级最低，默认为5）
 		REQ_SN:     "200604000000445-2018-05-21TestSn", // 交易流水号（必须全局唯一）
@@ -74,9 +74,9 @@ func TestAgreementSigningSms() {
 	}
 	// 请求参数
 	smsReq := &library.AgreementSigningSmsReq{
-		INFO: *library.InitAlliPayReqHeader(headerReq),
+		INFO: *library.InitAllinPayReqHeader(headerReq),
 		FAGRA: library.AgreementSigningSmsReqFAGRA{
-			MERCHANT_ID:  library.AlliPayCfg.MerchantCode,      // 商户代码
+			MERCHANT_ID:  library.AllinPayCfg.MerchantCode,      // 商户代码
 			BANK_CODE:    "105",                                // 银行代码
 			ACCOUNT_TYPE: "00",                                 // 账号类型：00借记卡，02信用卡
 			ACCOUNT_NO:   "6217000010064449999",                // 账号（借记卡或信用卡）
@@ -92,22 +92,22 @@ func TestAgreementSigningSms() {
 		},
 	}
 	// xml
-	reqXmlByte, err := library.ToAlliPayRequestXmlByte(smsReq)
+	reqXmlByte, err := library.ToAllinPayRequestXmlByte(smsReq)
 	if err != nil {
-		fmt.Println("library.ToAlliPayRequestXmlByte error : ", err)
+		fmt.Println("library.ToAllinPayRequestXmlByte error : ", err)
 		return
 	}
 	//fmt.Println(string(reqXmlByte))
 	// post
-	bodyByte, err := library.PostAlliPayXmlByte(library.AlliPayCfg.TestAddress, reqXmlByte)
+	bodyByte, err := library.PostAllinPayXmlByte(library.AllinPayCfg.TestAddress, reqXmlByte)
 	if err != nil {
-		fmt.Println("library.PostAlliPayXmlByte error : ", err)
+		fmt.Println("library.PostAllinPayXmlByte error : ", err)
 		return
 	}
 	//fmt.Println(string(bodyByte))
 	// verify and assignment result
 	smsRes := &library.SigningAgreementSmsRes{}
-	if err = library.VerifyAndSetAlliPayResponse(bodyByte, smsRes); err != nil {
+	if err = library.VerifyAndSetAllinPayResponse(bodyByte, smsRes); err != nil {
 		fmt.Println(err)
 		return
 	}

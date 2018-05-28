@@ -3,12 +3,12 @@ package library
 import "encoding/xml"
 
 const (
-	AlliPayXmlGbkHeader  = `<?xml version="1.0" encoding="GBK"?>`
-	AlliPayXmlUtf8Header = `<?xml version="1.0" encoding="UTF-8"?>`
+	AllinPayXmlGbkHeader  = `<?xml version="1.0" encoding="GBK"?>`
+	AllinPayXmlUtf8Header = `<?xml version="1.0" encoding="UTF-8"?>`
 )
 
 // 通联 请求头部信息
-type AlliPayReqINFO struct {
+type AllinPayReqINFO struct {
 	TRX_CODE    string `xml:"TRX_CODE,omitempty"`    // 交易代码
 	VERSION     string `xml:"VERSION,omitempty"`     // 版本（04）
 	DATA_TYPE   string `xml:"DATA_TYPE,omitempty"`   // 数据格式（2：xml格式）
@@ -21,7 +21,7 @@ type AlliPayReqINFO struct {
 }
 
 // 通联 响应头部信息
-type AlliPayResINFO struct {
+type AllinPayResINFO struct {
 	TRX_CODE   string `xml:"TRX_CODE,omitempty"`   // 交易代码
 	VERSION    string `xml:"VERSION,omitempty"`    // 版本（04）
 	DATA_TYPE  string `xml:"DATA_TYPE,omitempty"`  // 数据格式（2：xml格式）
@@ -34,7 +34,7 @@ type AlliPayResINFO struct {
 // 协议支付签约短信触发 请求
 type AgreementSigningSmsReq struct {
 	XMLName xml.Name                    `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO              `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO              `xml:"INFO,omitempty"`
 	FAGRA   AgreementSigningSmsReqFAGRA `xml:"FAGRA,omitempty"`
 }
 
@@ -57,7 +57,7 @@ type AgreementSigningSmsReqFAGRA struct {
 // 协议支付签约短信触发 响应
 type SigningAgreementSmsRes struct {
 	XMLName  xml.Name                        `xml:"AIPG,omitempty"`
-	INFO     AlliPayResINFO                  `xml:"INFO,omitempty"`
+	INFO     AllinPayResINFO                  `xml:"INFO,omitempty"`
 	FAGRARET SigningAgreementSmsResFAGRARET `xml:"FAGRARET,omitempty"`
 }
 
@@ -69,7 +69,7 @@ type SigningAgreementSmsResFAGRARET struct {
 // 协议支付签约 请求
 type AgreementSigningConfirmReq struct {
 	XMLName xml.Name                        `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO                  `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO                  `xml:"INFO,omitempty"`
 	FAGRC   AgreementSigningConfirmReqFAGRC `xml:"FAGRC,omitempty"`
 }
 
@@ -82,7 +82,7 @@ type AgreementSigningConfirmReqFAGRC struct {
 // 协议支付签约 响应
 type SigningAgreementConfirmRes struct {
 	XMLName  xml.Name                         `xml:"AIPG,omitempty"`
-	INFO     AlliPayResINFO                   `xml:"INFO,omitempty"`
+	INFO     AllinPayResINFO                   `xml:"INFO,omitempty"`
 	FAGRCRET SigningAgreementConfirmFAGRCRET `xml:"FAGRCRET,omitempty"`
 }
 
@@ -95,7 +95,7 @@ type SigningAgreementConfirmFAGRCRET struct {
 // 协议支付解约 请求
 type AgreementSigningCancelReq struct {
 	XMLName xml.Name                         `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO                   `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO                   `xml:"INFO,omitempty"`
 	FAGRCNL AgreementSigningCancelReqFAGRCNL `xml:"FAGRCNL,omitempty"`
 }
 
@@ -108,7 +108,7 @@ type AgreementSigningCancelReqFAGRCNL struct {
 // 协议支付解约 响应
 type SigningAgreementCancelRes struct {
 	XMLName    xml.Name                          `xml:"AIPG,omitempty"`
-	INFO       AlliPayResINFO                    `xml:"INFO,omitempty"`
+	INFO       AllinPayResINFO                    `xml:"INFO,omitempty"`
 	FAGRCNLRET SigningAgreementCancelFAGRCNLRET `xml:"FAGRCNLRET,omitempty"`
 }
 
@@ -120,7 +120,7 @@ type SigningAgreementCancelFAGRCNLRET struct {
 // 协议支付 请求
 type AgreementSigningPayReq struct {
 	XMLName xml.Name                      `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO                `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO                `xml:"INFO,omitempty"`
 	FASTTRX AgreementSigningPayReqFASTTRX `xml:"FASTTRX,omitempty"`
 }
 
@@ -146,7 +146,7 @@ type AgreementSigningPayReqFASTTRX struct {
 // 协议支付 响应
 type SigningAgreementPayRes struct {
 	XMLName    xml.Name                       `xml:"AIPG,omitempty"`
-	INFO       AlliPayResINFO                 `xml:"INFO,omitempty"`
+	INFO       AllinPayResINFO                 `xml:"INFO,omitempty"`
 	FASTTRXRET SigningAgreementPayFASTTRXRET `xml:"FASTTRXRET,omitempty"`
 }
 
@@ -160,7 +160,7 @@ type SigningAgreementPayFASTTRXRET struct {
 // 直接支付短信触发 请求
 type DirectPaySmsReq struct {
 	XMLName xml.Name               `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO         `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO         `xml:"INFO,omitempty"`
 	FASTTRX DirectPaySmsReqFASTTRX `xml:"FASTTRX,omitempty"`
 }
 
@@ -185,7 +185,7 @@ type DirectPaySmsReqFASTTRX struct {
 // 直接支付短信触发 响应
 type DirectPaySmsRes struct {
 	XMLName  xml.Name                 `xml:"AIPG,omitempty"`
-	INFO     AlliPayResINFO           `xml:"INFO,omitempty"`
+	INFO     AllinPayResINFO           `xml:"INFO,omitempty"`
 	TRANSRET DirectPaySmsResTRANSRET `xml:"TRANSRET,omitempty"`
 }
 
@@ -197,7 +197,7 @@ type DirectPaySmsResTRANSRET struct {
 // 直接支付确认 请求
 type DirectPayConfirmReq struct {
 	XMLName xml.Name                   `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO             `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO             `xml:"INFO,omitempty"`
 	FASTTRX DirectPayConfirmReqFASTTRX `xml:"FASTTRX,omitempty"`
 }
 
@@ -215,7 +215,7 @@ type DirectPayConfirmReqFASTTRX struct {
 // 直接支付确认 响应
 type DirectPayConfirmRes struct {
 	XMLName  xml.Name                     `xml:"AIPG,omitempty"`
-	INFO     AlliPayResINFO               `xml:"INFO,omitempty"`
+	INFO     AllinPayResINFO               `xml:"INFO,omitempty"`
 	TRANSRET DirectPayConfirmResTRANSRET `xml:"TRANSRET,omitempty"`
 }
 
@@ -228,7 +228,7 @@ type DirectPayConfirmResTRANSRET struct {
 // 退款 请求
 type RefundReq struct {
 	XMLName xml.Name        `xml:"AIPG,omitempty"`
-	INFO    AlliPayReqINFO  `xml:"INFO,omitempty"`
+	INFO    AllinPayReqINFO  `xml:"INFO,omitempty"`
 	REFUND  RefundReqREFUND `xml:"REFUND,omitempty"`
 }
 
@@ -246,7 +246,7 @@ type RefundReqREFUND struct {
 // 退款 响应
 type RefundRes struct {
 	XMLName  xml.Name           `xml:"AIPG,omitempty"`
-	INFO     AlliPayResINFO     `xml:"INFO,omitempty"`
+	INFO     AllinPayResINFO     `xml:"INFO,omitempty"`
 	TRANSRET RefundResTRANSRET `xml:"TRANSRET,omitempty"`
 }
 
@@ -259,7 +259,7 @@ type RefundResTRANSRET struct {
 // 交易结果查询 请求
 type QueryTransReq struct {
 	XMLName   xml.Name               `xml:"AIPG,omitempty"`
-	INFO      AlliPayReqINFO         `xml:"INFO,omitempty"`
+	INFO      AllinPayReqINFO         `xml:"INFO,omitempty"`
 	QTRANSREQ QueryTransReqQTRANSREQ `xml:"QTRANSREQ,omitempty"`
 }
 
@@ -271,7 +271,7 @@ type QueryTransReqQTRANSREQ struct {
 // 交易结果查询 响应
 type QueryTransRes struct {
 	XMLName   xml.Name                `xml:"AIPG,omitempty"`
-	INFO      AlliPayResINFO          `xml:"INFO,omitempty"`
+	INFO      AllinPayResINFO          `xml:"INFO,omitempty"`
 	QTRANSRSP QueryTransResQTRANSRSP `xml:"QTRANSRSP,omitempty"`
 }
 
@@ -294,7 +294,7 @@ type QueryTransResQTRANSRSP struct {
 
 // 此交易由通联向商户指定的url发起，使用HTTP GET方式提交到商户系统，仅适用单笔交易的情况
 // 单笔交易结果通知 请求
-type AlliPayNotifyReq struct {
+type AllinPayNotifyReq struct {
 	RETCODE    string // 返回码
 	RETMSG     string // 错误信息
 	ACCOUNT_NO string // 账号后4位（借记卡或信用卡后4位）
@@ -310,14 +310,14 @@ type AlliPayNotifyReq struct {
 }
 
 // 单笔交易结果通知 响应
-type AlliPayNotifyRes struct {
+type AllinPayNotifyRes struct {
 	Message string // 商户系统返回一行内容（商户系统返回一行内容 ）
 }
 
 // 本接口通过HTTPS GET下载即可
 // https://服.务.器.地址/aipg/GetConFile.do?SETTDAY=xxx&REQTIME=yyy&MERID=zzz&SIGN=sss
 // 简单对账文件下载 请求
-type AlliPayAccountCheckingReq struct {
+type AllinPayAccountCheckingReq struct {
 	Url        string // 请求url
 	SETTLE_DAY string // 清算日期（YYYYMMDD）
 	REQTIME    string // 请求时间（yyyyMMddHHmmss）
@@ -329,13 +329,13 @@ type AlliPayAccountCheckingReq struct {
 // 文件名规范：PDS+商户号+日期(yyyymmdd)+.txt
 // 对账文件分成不同的字段，字段之间用空格分开
 // 简单对账文件下载 响应
-type AlliPayAccountCheckingRes struct {
-	Header          AlliPayAccountCheckingResHeader  // 对账文件的第一行是总摘要信息
-	AccountChecking []*AlliPayAccountCheckingResBody // 对账文件的第二行起是对账的明细内容
+type AllinPayAccountCheckingRes struct {
+	Header          AllinPayAccountCheckingResHeader  // 对账文件的第一行是总摘要信息
+	AccountChecking []*AllinPayAccountCheckingResBody // 对账文件的第二行起是对账的明细内容
 }
 
 // 对账文件的第一行是总摘要信息
-type AlliPayAccountCheckingResHeader struct {
+type AllinPayAccountCheckingResHeader struct {
 	PDSMK                 string // PDS对账文件标记，固定为PDSMK
 	V200                  string // 版本号,本说明的版本固定为V200
 	AgentReceivableNumber string // 代收总笔数（对账文件的代收总笔数）
@@ -345,7 +345,7 @@ type AlliPayAccountCheckingResHeader struct {
 }
 
 // 对账文件的第二行起是对账的明细内容
-type AlliPayAccountCheckingResBody struct {
+type AllinPayAccountCheckingResBody struct {
 	BATCHID           string // 交易批次号（原交易的REQ_SN）
 	SN                string // 记录序号（也就是原请求交易中的SN的值）
 	TRXDIR            string // 交易类型（0 付 1收）

@@ -23,7 +23,7 @@ func VerifyXmlByteFromPublicKey(xmlByte []byte, sign string) error {
 	}
 	hashed := h.Sum(nil)
 	// verify
-	if err = rsa.VerifyPKCS1v15(AlliPayPublicKey, hash, hashed, signByte); err != nil {
+	if err = rsa.VerifyPKCS1v15(AllinPayPublicKey, hash, hashed, signByte); err != nil {
 		return errors.New("rsa.VerifyPKCS1v15 error : "+err.Error())
 	}
 	return err
@@ -40,7 +40,7 @@ func SignXmlByteFromPrivateKey(xmlByte []byte) (sign string, err error) {
 	}
 	hashed := h.Sum(nil)
 	// sign
-	singByte, err := rsa.SignPKCS1v15(rand.Reader, AlliPayPrivateKey, hash, hashed)
+	singByte, err := rsa.SignPKCS1v15(rand.Reader, AllinPayPrivateKey, hash, hashed)
 	if err != nil {
 		err = errors.New("rsa.SignPKCS1v15 error : "+err.Error())
 		return sign, err
