@@ -28,7 +28,7 @@ type AllinPayConfig struct {
 
 var (
 	AllinPayAddress    string          // request url
-	AllinPayCfg        *AllinPayConfig  // config
+	AllinPayCfg        *AllinPayConfig // config
 	AllinPayPrivateKey *rsa.PrivateKey // private key
 	AllinPayPublicKey  *rsa.PublicKey  // public key
 )
@@ -145,14 +145,14 @@ type AllinPayReqHeaderReq struct {
 // 通联请求头
 func InitAllinPayReqHeader(req *AllinPayReqHeaderReq) *AllinPayReqINFO {
 	return &AllinPayReqINFO{
-		TRX_CODE:    req.TRX_CODE,            // 交易代码
-		VERSION:     "04",                    // 版本（04）
-		DATA_TYPE:   "2",                     // 数据格式（2：xml格式）
-		LEVEL:       req.LEVEL,               // 处理级别（0-9  0优先级最低，默认为5）
+		TRX_CODE:    req.TRX_CODE,             // 交易代码
+		VERSION:     "04",                     // 版本（04）
+		DATA_TYPE:   "2",                      // 数据格式（2：xml格式）
+		LEVEL:       req.LEVEL,                // 处理级别（0-9  0优先级最低，默认为5）
 		MERCHANT_ID: AllinPayCfg.MerchantCode, // 商户代码
 		USER_NAME:   AllinPayCfg.Username,     // 用户名
 		USER_PASS:   AllinPayCfg.Password,     // 用户密码
-		REQ_SN:      req.REQ_SN,              // 交易流水号（必须全局唯一）
-		SIGNED_MSG:  req.SIGNED_MSG,          // 签名信息
+		REQ_SN:      req.REQ_SN,               // 交易流水号（必须全局唯一）
+		SIGNED_MSG:  req.SIGNED_MSG,           // 签名信息
 	}
 }

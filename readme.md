@@ -1,5 +1,9 @@
 # 通联支付
 
+## install
+
+go get -u -v github.com/ikaiguang/go-allinpay
+
 ## go version go1.10.1 darwin/amd64
 
 go run main.go

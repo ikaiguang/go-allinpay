@@ -1,6 +1,7 @@
+AllinPayEnv=dev
 AllinPayTestWeb=https://113.108.182.3/aiap
 AllinPayTestAddress=https://113.108.182.3/aipg/quickpay
-AllinPayProductWeb=https://tlt.allinpay.com/aiap
+AllinPayProductWeb=https://tlt.allinpay.com
 AllinPayProductAddress=https://tlt.allinpay.com/aipg/quickpay
 AllinPayWebUsername=20060400000044502
 AllinPayWebPassword=`12qwe

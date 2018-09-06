@@ -1,14 +1,14 @@
 package main
 
 import (
-	_ "./config"
-	"./library"
+	_ "github.com/ikaiguang/go-allinpay/config"
+	"github.com/ikaiguang/go-allinpay/library"
 	"fmt"
 )
 
 func main() {
 	// 协议签约
-	//TestAgreementSigningSms()
+	TestAgreementSigningSms()
 	// 协议支付
 	TestAgreementSigningPay()
 }
@@ -49,7 +49,7 @@ func TestAgreementSigningPay() {
 	}
 	//fmt.Println(string(reqXmlByte))
 	// post
-	bodyByte, err := library.PostAllinPayXmlByte(library.AllinPayCfg.TestAddress, reqXmlByte)
+	bodyByte, err := library.PostAllinPayXmlByte(library.AllinPayAddress, reqXmlByte)
 	if err != nil {
 		fmt.Println("library.PostAllinPayXmlByte error : ", err)
 		return
@@ -99,7 +99,7 @@ func TestAgreementSigningSms() {
 	}
 	//fmt.Println(string(reqXmlByte))
 	// post
-	bodyByte, err := library.PostAllinPayXmlByte(library.AllinPayCfg.TestAddress, reqXmlByte)
+	bodyByte, err := library.PostAllinPayXmlByte(library.AllinPayAddress, reqXmlByte)
 	if err != nil {
 		fmt.Println("library.PostAllinPayXmlByte error : ", err)
 		return
