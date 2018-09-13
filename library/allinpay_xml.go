@@ -84,24 +84,24 @@ func ToAllinPayRequestXmlByte(req interface{}) (r []byte, err error) {
 }
 
 // get sign string then set sign empty value
-func GetThenEmptyAllinPayResultSignValue(res interface{}) (sign string, err error) {
+func GetSignStrAndThenSetSignStrEmpty(res interface{}) (sign string, err error) {
 	// reflect value
 	reflectValue := reflect.ValueOf(res)
 	// pointer
 	if reflectValue.Kind() != reflect.Ptr {
-		err = errors.New("GetThenEmptyAllinPayResultSignValue result interface not a pointer type : reflect.Ptr")
+		err = errors.New("GetSignStrAndThenSetSignStrEmpty result interface not a pointer type : reflect.Ptr")
 		return sign, err
 	}
 	// info reflect value
 	infoValue := reflectValue.Elem().FieldByName("INFO")
 	// Info
 	if ! infoValue.IsValid() {
-		err = errors.New("GetThenEmptyAllinPayResultSignValue error : INFO flied not exist")
+		err = errors.New("GetSignStrAndThenSetSignStrEmpty error : INFO flied not exist")
 		return sign, err
 	}
 	// pointer
 	//if infoValue.Kind() != reflect.Ptr {
-	//	return errors.New("GetThenEmptyAllinPayResultSignValue infoValue not a pointer type : reflect.Ptr")
+	//	return errors.New("GetSignStrAndThenSetSignStrEmpty infoValue not a pointer type : reflect.Ptr")
 	//}
 	// signValue
 	//signValue := infoValue.Elem().FieldByName("SIGNED_MSG")
@@ -109,12 +109,12 @@ func GetThenEmptyAllinPayResultSignValue(res interface{}) (sign string, err erro
 	signValue := infoValue.FieldByName("SIGNED_MSG")
 	// SIGNED_MSG
 	if ! signValue.IsValid() {
-		err = errors.New("GetThenEmptyAllinPayResultSignValue error : SIGNED_MSG flied not exist")
+		err = errors.New("GetSignStrAndThenSetSignStrEmpty error : SIGNED_MSG flied not exist")
 		return sign, err
 	}
 	// string
 	if signValue.Kind() != reflect.String {
-		err = errors.New("GetThenEmptyAllinPayResultSignValue signValue not a string type : reflect.String")
+		err = errors.New("GetSignStrAndThenSetSignStrEmpty signValue not a string type : reflect.String")
 		return sign, err
 	}
 	// get sign
@@ -139,9 +139,9 @@ func VerifyAndSetAllinPayResponse(bodyByte []byte, res interface{}) (err error) 
 		return errors.New("xml.Unmarshal error : " + err.Error())
 	}
 	// get sign string and set empty value
-	signString, err := GetThenEmptyAllinPayResultSignValue(res)
+	signString, err := GetSignStrAndThenSetSignStrEmpty(res)
 	if err != nil {
-		return errors.New("GetThenEmptyAllinPayResultSignValue error : " + err.Error())
+		return errors.New("GetSignStrAndThenSetSignStrEmpty error : " + err.Error())
 	}
 	// 提换加密字符串
 	replacePattern := `<SIGNED_MSG>.*<\/SIGNED_MSG>`
